@@ -42,8 +42,17 @@ masks, _, _ = predictor.predict(
 print(masks.shape)
 
 for i, mask in enumerate(masks):
-    plt.figure(figsize=(10,10))
+    plt.figure(figsize=(12, 6))
+
+    plt.subplot(1, 2, 1)
     plt.plot(input_point[0, 0], input_point[0, 1], 'x')
     plt.imshow(mask[:,:,np.newaxis] * image)
     plt.axis('off')
-    plt.show()  
+
+    plt.subplot(1, 2, 2)
+    plt.plot(input_point[0, 0], input_point[0, 1], 'x')
+    plt.imshow(mask, cmap='gray')
+    plt.axis('off')
+
+    plt.tight_layout()
+    plt.show()
