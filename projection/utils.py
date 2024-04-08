@@ -12,10 +12,12 @@ def get_cameras(json_file):
 
 def get_extrinsic_matrix(camera: dict): 
     translation =  -torch.tensor(camera['position'], dtype=torch.float64).unsqueeze(dim=1) 
-    rotation = torch.tensor(camera['rotation'], dtype=torch.float64)
+    rotation = torch.tensor(camera['rotation'], dtype=torch.float64).T
+
+    translation = rotation @ translation
 
     extrinsic = torch.zeros((4,4), dtype=torch.float64) 
-    extrinsic[:3, :3] = rotation.t()
+    extrinsic[:3, :3] = rotation
     extrinsic[:3, 3:4] = translation
     extrinsic[3:4, 3:4] = 1   
 
