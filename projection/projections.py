@@ -44,7 +44,7 @@ def filter_projection_by_distance(projections: torch.Tensor, depths: torch.Tenso
     # The result will be a tensor of shape (m, n), where distances[i, j] is the distance
     # between user_points[:, i] and projections[:, j] 
 
-    distances = torch.cdist(user_points.t().type(torch.float64), projections.t().type(torch.float64))
+    distances = torch.cdist(user_points.t().type(torch.float64), projections.t().type(torch.float64)) 
 
     if opacities is not None:
         opacities = torch.sigmoid(opacities[indices]).unsqueeze(0)
@@ -74,8 +74,12 @@ def get_3D_indices(projections: torch.Tensor, depths: torch.Tensor, indices: tor
     total_filt_projections, filt_depths, filt_indices = filter_projection_by_distance(
         projections, depths, indices, user_points, eps, opacities)
 
+
     # For each user point, select projection which is least far away (depth-wise)
     for i in range(user_points.shape[1]):  
+        print(f'Point {i+1}: ')
+        print(f'\t Depth: {filt_depths[i][torch.argmin(filt_depths[i])]}')
+        print(f'\t (x,y) => {total_filt_projections[i][:, torch.argmin(filt_depths[i])]}')
         mapped_gaussian_index = filt_indices[i][torch.argmin(filt_depths[i])]
         gaussian_indices.append(mapped_gaussian_index)
     
