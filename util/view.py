@@ -16,7 +16,7 @@ class Viewset:
         self._intrinsic = get_intrinsic_matrix(self.cameras[0])
         self.WIDTH = self.cameras[0]['width']
         self.HEIGHT = self.cameras[0]['height']
-        self._count = len(self.cameras)
+        self.count = len(self.cameras)
 
     def get(self, i):
         # Get Extrinsic & intrinsic Matrices for selected camera
@@ -31,11 +31,10 @@ class Viewset:
 
         return View(extrinsic, self._intrinsic, image, scale, self.WIDTH, self.HEIGHT, i)
 
-    def sample(self, rate):
-        indices = list(range(self._count))
-        if rate < 1:
-            k = round(self._count * rate)
-            indices = random.sample(indices, k)
+    def sample(self, n):
+        indices = list(range(self.count))
+        if n < self.count:
+            indices = random.sample(indices, n)
 
         return [self.get(i) for i in indices]
 
