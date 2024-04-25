@@ -6,7 +6,8 @@ import os
 import torch
 import numpy as np
 import random
-
+from sklearn.cluster import MiniBatchKMeans
+from sklearn.preprocessing import normalize
 
 class Viewset:
     def __init__(self, camera_json, dataset_path) -> None:
@@ -31,12 +32,37 @@ class Viewset:
 
         return View(extrinsic, self._intrinsic, image, scale, self.WIDTH, self.HEIGHT, i)
 
-    def sample(self, n):
-        indices = list(range(self.count))
-        if n < self.count:
-            indices = random.sample(indices, n)
+    def sample(self, n, k_means=False):
+        if not k_means:
+            indices = list(range(self.count))
+            if n < self.count:
+                indices = random.sample(indices, n)
 
-        return [self.get(i) for i in indices]
+            return [self.get(i) for i in indices]
+        else:
+            positions = np.array([self.cameras[i]['position']
+                                  for i in range(self.count)])
+            rotations = np.array([np.ravel(self.cameras[i]['rotation'])
+                                 for i in range(self.count)])
+
+            features = np.hstack((normalize(positions), rotations))
+
+            minibatch_kmeans = MiniBatchKMeans(
+                n_clusters=n, batch_size=512, random_state=42)
+
+            # Fit the model
+            minibatch_kmeans.fit(features)
+
+            # Print cluster centers and labels
+            print("Cluster Centers:")
+            print(minibatch_kmeans.cluster_centers_)
+            print("Labels:")
+            print(minibatch_kmeans.labels_)
+
+            distances = np.linalg.norm(
+                features[:, np.newaxis] - minibatch_kmeans.cluster_centers_, axis=2)
+            closest_indices = np.argmin(distances, axis=0)
+            return [self.get(i) for i in closest_indices]
 
 
 class View:
