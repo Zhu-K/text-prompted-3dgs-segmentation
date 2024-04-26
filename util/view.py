@@ -10,7 +10,7 @@ from sklearn.cluster import MiniBatchKMeans
 from sklearn.preprocessing import normalize
 
 class Viewset:
-    def __init__(self, camera_json, dataset_path) -> None:
+    def __init__(self, camera_json, dataset_path, ext="jpg") -> None:
         self.cameras = get_cameras(camera_json)
         self._dataset_path = dataset_path
         # assume intrinsics and dimensions are consistent across all views
@@ -18,13 +18,14 @@ class Viewset:
         self.WIDTH = self.cameras[0]['width']
         self.HEIGHT = self.cameras[0]['height']
         self.count = len(self.cameras)
+        self.ext = ext
 
     def get(self, i):
         # Get Extrinsic & intrinsic Matrices for selected camera
         extrinsic = get_extrinsic_matrix(self.cameras[i])
 
         image = plt.imread(
-            os.path.join(self._dataset_path, f"{self.cameras[i]['img_name']}.jpg"))
+            os.path.join(self._dataset_path, f"{self.cameras[i]['img_name']}.{self.ext}"))
 
         scale = 1
         if self.WIDTH != image.shape[1]:
