@@ -5,6 +5,9 @@ All helper functions for finding majority voting of gaussian points
 import torch  
 from util.view import View
 
+# using 0.6 since based on SA3D paper it gave best results
+THRESHOLD = 0.6
+
 # Filter the points based on whether the land within the mask or not
 def make_filter_matrix(masked_results: list[list[View, torch.Tensor, torch.Tensor]] , pcd: torch.Tensor , num_views: int, num_points: int):
     """
@@ -46,7 +49,7 @@ def majority_voting(L):
     votes_sum = L.sum(dim=1)
 
     # Majority is determined if more than half of the views agree
-    majority_threshold = num_views / 2
+    majority_threshold = num_views * THRESHOLD
 
     # Perform majority voting
     majority_vote = (votes_sum > majority_threshold)
