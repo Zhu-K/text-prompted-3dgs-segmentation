@@ -1,0 +1,6 @@
+multiview_random: 
+
+    IoU: 0.9084
+    Accuracy: 0.9684
+
+
