@@ -20,7 +20,7 @@ class Viewset:
         self.count = len(self.cameras)
         self.ext = ext
 
-    def get(self, i):
+    def get(self, i, get_img_name = False):
         # Get Extrinsic & intrinsic Matrices for selected camera
         extrinsic = get_extrinsic_matrix(self.cameras[i])
 
@@ -31,7 +31,10 @@ class Viewset:
         if self.WIDTH != image.shape[1]:
             scale = self.WIDTH / image.shape[1]
 
-        return View(extrinsic, self._intrinsic, image, scale, self.WIDTH, self.HEIGHT, i)
+        if get_img_name: 
+            return View(extrinsic, self._intrinsic, image, scale, self.WIDTH, self.HEIGHT, i), f"{self.cameras[i]['img_name']}.jpg"
+
+        return View(extrinsic, self._intrinsic, image, scale, self.WIDTH, self.HEIGHT, i) 
 
     def sample(self, n, k_means=False):
         if not k_means:
