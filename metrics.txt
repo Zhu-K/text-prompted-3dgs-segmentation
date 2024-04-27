@@ -1,6 +1,40 @@
+singleview: 
+
+    IoU: 0.9025
+    Accuracy: 0.9667
+
 multiview_random: 
 
     IoU: 0.9084
     Accuracy: 0.9684
 
+kmeans_10: 
+
+    IoU: 0.8009
+    Accuracy: 0.9111 
+
+kmeans_50: 
+
+    IoU: 0.9335
+    Accuracy: 0.9771
+
+kmeans_100: 
+
+    IoU: 0.9388
+    Accuracy: 0.9793
+
+fortress: 
+
+    IoU: 0.9524
+    Accuracy: 0.9923
+
+pinecone: 
+
+    IoU: 0.9095
+    Accuracy: 0.9884 
+
+orchid: 
+
+    IoU: 0.7604
+    Accuracy: 0.9571
 
