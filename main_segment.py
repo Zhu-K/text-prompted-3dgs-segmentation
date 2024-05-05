@@ -42,7 +42,7 @@ def predict_mask_from_view(prompt_gaussians, view):
 
     return mask_view[max_ind], points 
 
-def color_ply_white(fname:str): 
+def color_ply_white(fname:str, output:str): 
     # Modify segmented file to be pure white so that mask creation can be done 
     ply = PlyData.read(f'./outputs/{fname}')
     vertices = np.array(ply['vertex'].data)
@@ -62,7 +62,7 @@ def color_ply_white(fname:str):
 
     # Save the modified PLY data back to a new file
     ply = PlyData([updated_vertices], text=ply.text)
-    ply.write(OUTPUT_FILE)
+    ply.write(f'{output}/point_cloud/iteration_30000/{args.name}.ply')
 
 if __name__ == '__main__': 
     parser = ArgumentParser(description="Mask generation parameters") 
@@ -79,7 +79,7 @@ if __name__ == '__main__':
     EPS = 10
     MASK_PADDING = 10 # do not sample initial points from within padding
     GAUSSIAN_FILE = args.gaussian_file 
-    OUTPUT_FILE = GAUSSIAN_FILE if args.output == None else args.output 
+    OUTPUT_DIR = GAUSSIAN_FILE if args.output == None else args.output 
     CAMERAS_JSON = args.camera_file 
     IMAGE_PATH = args.images  
 
@@ -173,6 +173,8 @@ if __name__ == '__main__':
 
     if args.white: 
         color_ply_white(f'{args.name}.ply') 
-
-    print(f'Segmented gaussian file created at {OUTPUT_FILE}') 
-    print('Render to see results')
+        print(f'White Segmented gaussian file created at {OUTPUT_DIR}/point_cloud/iteration_30000')  
+        print('Render to see results')
+    
+    print(f'Unmodified segmented ply file created at ./outputs/{args.name}.ply')  
+        
