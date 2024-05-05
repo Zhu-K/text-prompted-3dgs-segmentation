@@ -2,9 +2,9 @@
 
 This repository contains the unofficial implementation of [Segment Anything in 3D Gaussians](https://arxiv.org/abs/2401.17857)* , with the added functionality of multi-view text prompting to get the "initial user points" for object segmentation. 
 
-\* The Gaussian Decomposition functionality has yet to be implemented. If you are interested, please feel free to make a pull request!  
-
 For detailed qualitative and quantitative comparisons with the original paper, please refer to our [report](https://drive.google.com/file/d/1i6wGrMlp3WK64zs21UmKRM7YhhdSrIWT/view?usp=sharing) 
+
+> \* _The Gaussian Decomposition functionality has yet to be implemented. If you are interested, please feel free to make a pull request!_  
 
 # What did we change? 
 
