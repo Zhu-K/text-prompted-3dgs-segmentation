@@ -83,7 +83,7 @@ python render.py
 --data_device cuda 
 ```
 
-\* Please make sure that if `--white` was not passed previously, you create a new folder with `cameras.json`, `cfg_args` and `point_cloud>iteration_30000>point_cloud.ply` where the segmented ply file in ./outputs is renamed to point_cloud.ply 
+> \* _Please make sure that if `--white` was not passed previously, you create a new folder with `cameras.json`, `cfg_args` and `point_cloud>iteration_30000>point_cloud.ply` where the segmented ply file in ./outputs is renamed to point_cloud.ply_ 
 
 ### metrics.py 
 
