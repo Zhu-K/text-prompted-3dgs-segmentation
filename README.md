@@ -11,6 +11,10 @@ For detailed qualitative and quantitative comparisons with the original paper, p
 The small change we added which lead to better overall results was using lang-sam to sample initial points not only from one view, but from different views which are as diverse as possible (ensured using K-Means Clustering on views based on position and orientation of cameras). 
 This allows better set of points to be selected initially and subsequently does better segmentation. For full detailed reasoning and results, please refer to report above. 
 
+# Notebook Setup 
+
+You can run/view the commands we run in `main_pipeline_langsam.ipynb` for this implementation. The `main_pipeline.ipynb` has the implementation without lang-sam, where the user clicked points are used on a single view for initialization. We discard the use of this in the `main_segment.py` script since lang-sam does a much better job!
+
 # Running Steps to Reproduce Results  
 
 Our implementation is based off the Spin-nerf dataset (for reasons outlined in original paper). So, first please download the [SPIn-NeRF Dataset](https://drive.google.com/drive/folders/1N7D4-6IutYD40v9lfXGSVbWrd47UdJEC) 
